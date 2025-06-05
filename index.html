@@ -444,6 +444,35 @@
             }
             
             return roster;
+            // Ensure at least 2 QBs and 2 TEs
+while (roster.QB.length < 2) {
+    const qb = playersData.find(p => p.slotName === 'QB' && !drafted.has(p.id));
+    if (qb) {
+        drafted.add(qb.id);
+        roster.QB.push(qb);
+        roster.picks.push({
+            round: 19, // or whatever makes sense for your display
+            pick: pickNumber++,
+            player: qb
+        });
+    } else {
+        break; // no more QBs available
+    }
+}
+while (roster.TE.length < 2) {
+    const te = playersData.find(p => p.slotName === 'TE' && !drafted.has(p.id));
+    if (te) {
+        drafted.add(te.id);
+        roster.TE.push(te);
+        roster.picks.push({
+            round: 19,
+            pick: pickNumber++,
+            player: te
+        });
+    } else {
+        break; // no more TEs available
+    }
+}
         }
         
         function generateAllTeams() {
